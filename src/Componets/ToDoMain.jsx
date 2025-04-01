@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from "react";
-import "./ToDoMain.scss"; // Import SCSS
+import "./ToDoMain.scss";
 
 const ToDoMain = () => {
   const [task, setTask] = useState("");
@@ -11,7 +11,7 @@ const ToDoMain = () => {
   }, []);
 
   const handleAddandUpdate = () => {
-    if (task.trim() === "") return; // Prevent empty tasks
+    if (task.trim() === "") return;
 
     if (editId !== null) {
       const result = tasks.map((d, index) => (index === editId ? task : d));
@@ -23,7 +23,6 @@ const ToDoMain = () => {
     setTask("");
   };
 
-  // ✅ Add task when Enter is pressed
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
       handleAddandUpdate();
