@@ -1,0 +1,118 @@
+// Import Google Font
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap");
+
+$primary-color: #4a90e2;
+$secondary-color: #f4f4f4;
+$dark-gray: #333;
+$light-gray: #999;
+$border-radius: 8px;
+
+.todo-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f9f9f9;
+    font-family: "Inter", sans-serif;
+}
+
+.todo-card {
+    width: 350px;
+    background: #fff;
+    padding: 20px;
+    border-radius: $border-radius;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+
+    h2 {
+        margin-bottom: 15px;
+        color: $dark-gray;
+    }
+}
+
+.input-group {
+    display: flex;
+    gap: 10px;
+
+    input {
+        flex: 1;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: $border-radius;
+        font-size: 14px;
+        outline: none;
+        transition: border 0.2s ease-in-out;
+
+        &:focus {
+            border-color: $primary-color;
+        }
+    }
+
+    button {
+        background: $primary-color;
+        color: #fff;
+        border: none;
+        padding: 10px 15px;
+        border-radius: $border-radius;
+        cursor: pointer;
+        font-weight: 600;
+        transition: background 0.2s ease-in-out;
+
+        &:hover {
+            background: darken($primary-color, 10%);
+        }
+    }
+}
+
+.task-list {
+    margin-top: 20px;
+}
+
+.task-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: $secondary-color;
+    padding: 10px;
+    border-radius: $border-radius;
+    margin-bottom: 8px;
+    font-size: 14px;
+
+    span {
+        flex: 1;
+        text-align: left;
+    }
+
+    .task-actions {
+        display: flex;
+        gap: 5px;
+
+        .edit-btn {
+            background: #ffc107;
+            color: #fff;
+            border: none;
+            padding: 5px 8px;
+            border-radius: $border-radius;
+            cursor: pointer;
+            transition: background 0.2s ease-in-out;
+
+            &:hover {
+                background: darken(#ffc107, 10%);
+            }
+        }
+
+        .delete-btn {
+            background: #e74c3c;
+            color: #fff;
+            border: none;
+            padding: 5px 8px;
+            border-radius: $border-radius;
+            cursor: pointer;
+            transition: background 0.2s ease-in-out;
+
+            &:hover {
+                background: darken(#e74c3c, 10%);
+            }
+        }
+    }
+}
