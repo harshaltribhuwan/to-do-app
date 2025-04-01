@@ -5,13 +5,13 @@
 1. Clone this repository:
 
     ```bash
-    git clone https://github.com/harshaltribhuwan/todo-app.git
+    git clone https://github.com/harshaltribhuwan/to-do-app.git
     ```
 
 2. Navigate to the project directory:
 
     ```bash
-    cd todo-app
+    cd to-do-app
     ```
 
 3. Install dependencies:
