@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import "./ToDoMain.scss";
 
 const ToDoMain = () => {
@@ -6,9 +6,25 @@ const ToDoMain = () => {
   const [tasks, setTasks] = useState([]);
   const [editId, setEditId] = useState(null);
 
+  const initialRender = useRef(true);
+
   const handleTask = useCallback((e) => {
     setTask(e.target.value);
   }, []);
+
+  useEffect(() => {
+    const result = JSON.parse(localStorage.getItem("tasks")) || [];
+
+    setTasks(result);
+  }, []);
+
+  useEffect(() => {
+    if (initialRender.current) {
+      initialRender.current = false;
+      return;
+    }
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+  }, [tasks]);
 
   const handleAddandUpdate = () => {
     if (task.trim() === "") return;
