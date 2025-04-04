@@ -1,11 +1,12 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
+import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
+
 import "./ToDoMain.scss";
 
 const ToDoMain = () => {
   const [task, setTask] = useState("");
   const [tasks, setTasks] = useState([]);
   const [editId, setEditId] = useState(null);
-
   const initialRender = useRef(true);
 
   const handleTask = useCallback((e) => {
@@ -14,7 +15,6 @@ const ToDoMain = () => {
 
   useEffect(() => {
     const result = JSON.parse(localStorage.getItem("tasks")) || [];
-
     setTasks(result);
   }, []);
 
@@ -58,6 +58,16 @@ const ToDoMain = () => {
     }
   };
 
+  const onDragEnd = (result) => {
+    if (!result.destination) return; // Dropped outside
+
+    const reorderedTasks = Array.from(tasks);
+    const [movedTask] = reorderedTasks.splice(result.source.index, 1);
+    reorderedTasks.splice(result.destination.index, 0, movedTask);
+
+    setTasks(reorderedTasks);
+  };
+
   return (
     <div className="todo-container">
       <div className="todo-card">
@@ -75,24 +85,51 @@ const ToDoMain = () => {
           </button>
         </div>
 
-        <div className="task-list">
-          {tasks.map((t, index) => (
-            <div key={index} className="task-item">
-              <span>{t}</span>
-              <div className="task-actions">
-                <button className="edit-btn" onClick={() => handleEdit(index)}>
-                  ✏️
-                </button>
-                <button
-                  className="delete-btn"
-                  onClick={() => handleDelete(index)}
-                >
-                  ❌
-                </button>
+        <DragDropContext onDragEnd={onDragEnd}>
+          <Droppable droppableId="taskList">
+            {(provided) => (
+              <div
+                className="task-list"
+                {...provided.droppableProps}
+                ref={provided.innerRef}
+              >
+                {tasks.map((t, index) => (
+                  <Draggable
+                    key={index}
+                    draggableId={String(index)}
+                    index={index}
+                  >
+                    {(provided) => (
+                      <div
+                        className="task-item"
+                        ref={provided.innerRef}
+                        {...provided.draggableProps}
+                        {...provided.dragHandleProps}
+                      >
+                        <span>{t}</span>
+                        <div className="task-actions">
+                          <button
+                            className="edit-btn"
+                            onClick={() => handleEdit(index)}
+                          >
+                            ✏️
+                          </button>
+                          <button
+                            className="delete-btn"
+                            onClick={() => handleDelete(index)}
+                          >
+                            ❌
+                          </button>
+                        </div>
+                      </div>
+                    )}
+                  </Draggable>
+                ))}
+                {provided.placeholder}
               </div>
-            </div>
-          ))}
-        </div>
+            )}
+          </Droppable>
+        </DragDropContext>
       </div>
     </div>
   );
